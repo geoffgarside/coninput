@@ -86,7 +86,6 @@ func WinPeekConsoleInput(consoleInput windows.Handle, buffer *InputRecord,
 	}
 
 	return nil
-
 }
 
 // PeekNConsoleInputs is a wrapper around PeekConsoleInput (see
