@@ -145,8 +145,8 @@ func TestInputRecordUnwrapUnknownEvent(t *testing.T) {
 	result := ir.Unwrap()
 	if unknown, ok := result.(*UnknownEvent); !ok {
 		t.Errorf("Expected UnknownEvent, got %T", result)
-	} else if unknown.InputRecord.EventType != 999 {
-		t.Errorf("Expected EventType 999, got %d", unknown.InputRecord.EventType)
+	} else if unknown.EventType != 999 {
+		t.Errorf("Expected EventType 999, got %d", unknown.EventType)
 	}
 }
 

@@ -334,7 +334,7 @@ func (e UnknownEvent) Type() string { return "UnknownEvent" }
 // String ensures that UnknownEvent satisfies EventRecord and fmt.Stringer
 // interfaces.
 func (e UnknownEvent) String() string {
-	return fmt.Sprintf("%s[Type: %d, Data: %v]", e.Type(), e.InputRecord.EventType, e.InputRecord.Event[:])
+	return fmt.Sprintf("%s[Type: %d, Data: %v]", e.Type(), e.EventType, e.Event[:])
 }
 
 // Coord represent the COORD structure from the Windows
