@@ -1,24 +1,76 @@
+version: "2"
 linters:
-  enable-all: true
+  default: all
   disable:
-    - golint
-    - interfacer
-    - scopelint
-    - maligned
-    - rowserrcheck
-    - funlen
     - depguard
-    - goerr113
-    - exhaustivestruct
-    - testpackage
+    - dupl
+    - err113
+    - exhaustruct
     - gochecknoglobals
+    - godot
+    - ireturn
+    - mnd
+    - nlreturn
+    - paralleltest
+    - perfsprint
+    - testpackage
+    - varnamelen
     - wrapcheck
-    - forbidigo
-    - ifshort
-    - cyclop
-    - gomoddirectives
-linters-settings:
-  exhaustive:
-    default-signifies-exhaustive: true
-issues:
-  exclude-use-default: false
+    - wsl
+  settings:
+    cyclop:
+      max-complexity: 20
+    gosec:
+      excludes:
+        - G103
+        - G115
+    revive:
+      rules:
+        - name: var-naming
+          disabled: true
+        - name: exported
+          disabled: true
+  exclusions:
+    generated: lax
+    rules:
+      - path: (.+)\.go$
+        text: var-naming.*VK_
+      - path: (.+)\.go$
+        text: var-naming.*FROM_LEFT
+      - path: (.+)\.go$
+        text: var-naming.*RIGHT.*_BUTTON
+      - path: (.+)\.go$
+        text: var-naming.*CAPS.*_ON
+      - path: (.+)\.go$
+        text: var-naming.*ENABLE_
+      - path: (.+)\.go$
+        text: var-naming.*MOUSE_
+      - path: (.+)\.go$
+        text: var-naming.*DOUBLE_CLICK
+      - path: (.+)\.go$
+        text: should have a package comment
+      - path: (.+)\.go$
+        text: exported.*should have comment.*VK_
+      - path: (.+)\.go$
+        text: exported.*should have comment.*Contains
+      - path: (.+)\.go$
+        text: exported.*should have comment.*IsReleased
+      - path: (.+)\.go$
+        text: exported.*should have comment.*WheelDirectionName
+      - path: (.+)\.go$
+        text: exported.*should have comment.*FlushConsoleInputBuffer
+      - path: (.+)\.go$
+        text: comment on exported function.*should be of the form
+      - path: (.+)\.go$
+        text: G103.*Use of unsafe calls
+      - path: (.+)\.go$
+        text: G115.*integer overflow conversion
+      - path: (.+)_test\.go$
+        linters:
+          - funlen
+          - wsl_v5
+      - path: read.go
+        linters:
+          - wsl_v5
+    paths:
+      - example/main.go
