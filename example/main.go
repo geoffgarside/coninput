@@ -52,10 +52,7 @@ func run() (err error) {
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 
-	for {
-		if ctx.Err() != nil {
-			break
-		}
+	for ctx.Err() == nil {
 
 		events, err := coninput.ReadNConsoleInputs(con, 16)
 		if err != nil {

@@ -31,9 +31,9 @@ func NewStdinHandle() (windows.Handle, error) {
 // ReadNConsoleInputs.
 func WinReadConsoleInput(consoleInput windows.Handle, buffer *InputRecord,
 	length uint32, numberOfEventsRead *uint32) error {
-	r, _, e := syscall.Syscall6(procReadConsoleInputW.Addr(), 4,
+	r, _, e := syscall.SyscallN(procReadConsoleInputW.Addr(),
 		uintptr(consoleInput), uintptr(unsafe.Pointer(buffer)), uintptr(length),
-		uintptr(unsafe.Pointer(numberOfEventsRead)), 0, 0)
+		uintptr(unsafe.Pointer(numberOfEventsRead)))
 	if r == 0 {
 		return error(e)
 	}
@@ -78,15 +78,14 @@ func ReadConsoleInput(console windows.Handle, inputRecords []InputRecord) (uint3
 // PeekNConsoleInputs.
 func WinPeekConsoleInput(consoleInput windows.Handle, buffer *InputRecord,
 	length uint32, numberOfEventsRead *uint32) error {
-	r, _, e := syscall.Syscall6(procPeekConsoleInputW.Addr(), 4,
+	r, _, e := syscall.SyscallN(procPeekConsoleInputW.Addr(),
 		uintptr(consoleInput), uintptr(unsafe.Pointer(buffer)), uintptr(length),
-		uintptr(unsafe.Pointer(numberOfEventsRead)), 0, 0)
+		uintptr(unsafe.Pointer(numberOfEventsRead)))
 	if r == 0 {
 		return error(e)
 	}
 
 	return nil
-
 }
 
 // PeekNConsoleInputs is a wrapper around PeekConsoleInput (see
@@ -124,9 +123,8 @@ func PeekConsoleInput(console windows.Handle, inputRecords []InputRecord) (uint3
 // Windows console API function GetNumberOfConsoleInputEvents (see
 // https://docs.microsoft.com/en-us/windows/console/getnumberofconsoleinputevents).
 func WinGetNumberOfConsoleInputEvents(consoleInput windows.Handle, numberOfEvents *uint32) error {
-	r, _, e := syscall.Syscall6(procGetNumberOfConsoleInputEvents.Addr(), 2,
-		uintptr(consoleInput), uintptr(unsafe.Pointer(numberOfEvents)), 0,
-		0, 0, 0)
+	r, _, e := syscall.SyscallN(procGetNumberOfConsoleInputEvents.Addr(),
+		uintptr(consoleInput), uintptr(unsafe.Pointer(numberOfEvents)))
 	if r == 0 {
 		return error(e)
 	}
@@ -145,7 +143,7 @@ func GetNumberOfConsoleInputEvents(console windows.Handle) (uint32, error) {
 }
 
 func FlushConsoleInputBuffer(consoleInput windows.Handle) error {
-	r, _, e := syscall.Syscall(procFlushConsoleInputBuffer.Addr(), 1, uintptr(consoleInput), 0, 0)
+	r, _, e := syscall.SyscallN(procFlushConsoleInputBuffer.Addr(), uintptr(consoleInput))
 	if r == 0 {
 		return error(e)
 	}

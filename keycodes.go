@@ -1,3 +1,4 @@
+// Package coninput provides Go bindings for Windows Console Input API.
 package coninput
 
 // VirtualKeyCode holds a virtual key code (see
